@@ -16,7 +16,6 @@ public class UserController {
 
     @PostMapping("/register")
     public String registerUser(@RequestBody User user) {
-
         userService.save(user);
         return user.get_id();
     }
