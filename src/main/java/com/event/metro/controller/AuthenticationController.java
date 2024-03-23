@@ -1,6 +1,6 @@
 package com.event.metro.controller;
 
-import com.event.metro.model.ApplicationUser;
+import com.event.metro.model.User;
 import com.event.metro.model.dto.LoginDTO;
 import com.event.metro.model.dto.LoginResponseDTO;
 import com.event.metro.model.dto.SignupDTO;
@@ -18,7 +18,7 @@ public class AuthenticationController {
     private AuthenticationService authenticationService;
 
     @PostMapping("/signup")
-    public ApplicationUser signUp(@RequestBody SignupDTO signupDTO) {
+    public User signUp(@RequestBody SignupDTO signupDTO) {
         return authenticationService.signup(signupDTO);
     }
 

@@ -1,6 +1,6 @@
 package com.event.metro.service;
 
-import com.event.metro.model.ApplicationUser;
+import com.event.metro.model.User;
 import com.event.metro.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -25,7 +25,7 @@ public class UserService implements UserDetailsService {
                 .orElseThrow(() -> new UsernameNotFoundException("username not found"));
     }
 
-    public ApplicationUser findById(String id) {
+    public User findById(String id) {
         return userRepository.findById(id)
                 .orElseThrow(() -> new UsernameNotFoundException("user id not found"));
     }
