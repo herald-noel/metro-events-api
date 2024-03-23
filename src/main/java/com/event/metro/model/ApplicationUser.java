@@ -6,6 +6,7 @@ import lombok.NonNull;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.index.Indexed;
 import org.springframework.data.mongodb.core.mapping.Document;
+import org.springframework.data.mongodb.core.mapping.MongoId;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
@@ -16,7 +17,7 @@ import java.util.List;
 @Document
 @Data
 public class ApplicationUser implements UserDetails {
-    @Id
+    @MongoId
     private String userId;
     @Indexed(unique = true)
     @NonNull
