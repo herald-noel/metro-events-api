@@ -5,14 +5,14 @@ import lombok.Data;
 import lombok.NonNull;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.index.Indexed;
+import org.springframework.data.mongodb.core.mapping.DBRef;
 import org.springframework.data.mongodb.core.mapping.Document;
 import org.springframework.data.mongodb.core.mapping.MongoId;
 import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
-import java.util.Collection;
-import java.util.Collections;
-import java.util.List;
+import java.util.*;
 
 @Document
 @Data
@@ -29,9 +29,24 @@ public class ApplicationUser implements UserDetails {
     @NonNull
     private String password;
 
+    private Set<Role> authorities;
+
+    public ApplicationUser() {
+        super();
+        this.authorities = new HashSet<>();
+    }
+
+    public ApplicationUser(@NonNull String username, @NonNull String email, @NonNull String password, Set<Role> authorities) {
+        super();
+        this.username = username;
+        this.email = email;
+        this.password = password;
+        this.authorities = authorities;
+    }
+
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        return Collections.EMPTY_LIST;
+        return this.authorities;
     }
 
     @Override

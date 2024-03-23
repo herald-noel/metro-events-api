@@ -10,7 +10,7 @@ import org.springframework.security.core.GrantedAuthority;
 public class Role implements GrantedAuthority {
 
     @Id
-    private int roleId;
+    private String roleId;
 
     private String authority;
 
