@@ -39,7 +39,6 @@ public class AuthenticationService {
             Authentication auth = authenticationManager.authenticate(
                     new UsernamePasswordAuthenticationToken(username, password)
             );
-
             String token = tokenService.generateJwt(auth);
             return new LoginResponseDTO(userRepository.findByUsername(username).get(), token);
         } catch (AuthenticationException e) {

@@ -1,6 +1,8 @@
 package com.event.metro.controller;
 
 import com.event.metro.model.ApplicationUser;
+import com.event.metro.model.dto.LoginDTO;
+import com.event.metro.model.dto.LoginResponseDTO;
 import com.event.metro.model.dto.SignupDTO;
 import com.event.metro.service.AuthenticationService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,5 +20,10 @@ public class AuthenticationController {
     @PostMapping("/signup")
     public ApplicationUser signUp(@RequestBody SignupDTO signupDTO) {
         return authenticationService.signup(signupDTO);
+    }
+
+    @PostMapping("/login")
+    public LoginResponseDTO loginUser(@RequestBody LoginDTO body) {
+        return authenticationService.loginUser(body.getUsername(), body.getPassword());
     }
 }
