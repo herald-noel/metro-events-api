@@ -1,7 +1,5 @@
 package com.event.metro;
 
-import com.event.metro.model.ApplicationUser;
-import com.event.metro.model.Role;
 import com.event.metro.repository.RoleRepository;
 import com.event.metro.repository.UserRepository;
 import org.springframework.boot.CommandLineRunner;
@@ -12,7 +10,6 @@ import org.springframework.data.mongodb.repository.config.EnableMongoRepositorie
 import org.springframework.security.crypto.password.PasswordEncoder;
 
 @SpringBootApplication
-@EnableMongoRepositories
 public class MetroApplication {
 
     public static void main(String[] args) {
