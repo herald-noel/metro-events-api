@@ -1,4 +1,4 @@
-package com.event.metro.Entity;
+package com.event.metro.model;
 
 import lombok.Data;
 import org.springframework.data.annotation.Id;
