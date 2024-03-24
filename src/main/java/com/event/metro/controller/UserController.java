@@ -1,5 +1,6 @@
 package com.event.metro.controller;
 
+import com.event.metro.model.Event;
 import com.event.metro.model.OrganizerEvents;
 import com.event.metro.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,8 +22,13 @@ public class UserController {
         return "User access level.";
     }
 
-    @GetMapping("/events")
+    @GetMapping("/organizer/events")
     public ResponseEntity<List<OrganizerEvents>> showOrganizerEvents() {
         return userService.getAllOrganizerEvents();
+    }
+
+    @GetMapping("/allEvents")
+    public ResponseEntity<List<Event>> showAllEvents() {
+        return userService.getAllEvents();
     }
 }
