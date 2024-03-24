@@ -33,12 +33,16 @@ public class AuthenticationService {
     @Autowired
     private TokenService tokenService;
 
-    public User signup(SignupDTO dto) {
+    public String signup(SignupDTO dto) {
+        if (userRepository.findByUsername(dto.getUsername()).isPresent()){
+            return "username already exist";
+        }
         Role userRole = roleRepository.findByAuthority("USER").get();
         Set<Role> authorities = new HashSet<>();
         authorities.add(userRole);
         User user = new User(dto.getUsername(), dto.getEmail(), passwordEncoder.encode(dto.getPassword()), authorities);
-        return userRepository.save(user);
+        userRepository.save(user);
+        return "success";
     }
 
     public LoginResponseDTO loginUser(String username, String password) {

@@ -15,7 +15,7 @@ public class AuthenticationController {
     private AuthenticationService authenticationService;
 
     @PostMapping("/signup")
-    public User signUp(@RequestBody SignupDTO signupDTO) {
+    public String signUp(@RequestBody SignupDTO signupDTO) {
         return authenticationService.signup(signupDTO);
     }
 
