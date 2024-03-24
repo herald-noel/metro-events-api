@@ -13,5 +13,5 @@ public class CreateEventDTO {
     @NotBlank
     String username;
     @NonNull
-    Event event;
+    EventDTO event;
 }
