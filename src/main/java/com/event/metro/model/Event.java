@@ -26,6 +26,7 @@ public class Event {
     @NonNull String description;
     boolean active;
     List<Participant> participantList;
+    List<Review> reviewList;
 
     public Event() {
         this.participantList = new ArrayList<>();
@@ -44,6 +45,12 @@ public class Event {
         this.dateEnd = dateEnd;
         this.description = description;
         this.participantList = new ArrayList<>();
+        this.reviewList = new ArrayList<>();
         this.active = true;
+    }
+
+    public void addReview(String username, String message) {
+        Review review = new Review(username, message);
+        this.reviewList.add(review);
     }
 }
