@@ -7,8 +7,8 @@ import lombok.Setter;
 @Getter
 @Setter
 public class EventDTO {
+    @NonNull String owner;
     @NonNull String title;
-    @NonNull String eventDateTimeCreated;
     @NonNull String timeStart;
     @NonNull String timeEnd;
     @NonNull String dateStart;

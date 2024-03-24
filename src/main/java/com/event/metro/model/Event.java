@@ -3,14 +3,20 @@ package com.event.metro.model;
 import lombok.Getter;
 import lombok.NonNull;
 import lombok.Setter;
+import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.mapping.Document;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
+@Document(collection = "events")
 @Getter
 @Setter
 public class Event {
+    @Id
+    String eventId;
+    @NonNull String owner;
     @NonNull String title;
     @NonNull String eventDateTimeCreated;
     @NonNull String timeStart;
@@ -25,10 +31,11 @@ public class Event {
         this.participantList = new ArrayList<>();
     }
 
-    public Event(@NonNull String title, @NonNull String timeStart,
+    public Event(@NonNull String owner, @NonNull String title, @NonNull String timeStart,
                  @NonNull String timeEnd, @NonNull String dateStart, @NonNull String dateEnd,
                  @NonNull String description) {
         LocalDateTime localDateTime = LocalDateTime.now();
+        this.owner = owner;
         this.title = title;
         this.eventDateTimeCreated = localDateTime.toString();
         this.timeStart = timeStart;

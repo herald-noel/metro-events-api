@@ -1,8 +1,7 @@
 package com.event.metro.controller;
 
 import com.event.metro.model.Event;
-import com.event.metro.model.OrganizerEvents;
-import com.event.metro.model.dto.CreateEventDTO;
+import com.event.metro.model.dto.EventDTO;
 import com.event.metro.service.OrganizerService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -17,7 +16,7 @@ public class OrganizerController {
     @Autowired
     OrganizerService organizerService;
     @PostMapping("/create/event")
-    public ResponseEntity<OrganizerEvents> createEvent(@RequestBody CreateEventDTO createEventDTO) {
-        return organizerService.addOrganizerEvent(createEventDTO.getUsername(), createEventDTO.getEvent());
+    public ResponseEntity<Event> createEvent(@RequestBody EventDTO eventDTO) {
+        return organizerService.addOrganizerEvent(eventDTO);
     }
 }
