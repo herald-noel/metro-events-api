@@ -1,10 +1,8 @@
 package com.event.metro.service;
 
 import com.event.metro.model.Event;
-import com.event.metro.model.OrganizerEvents;
 import com.event.metro.model.User;
 import com.event.metro.repository.EventRepository;
-import com.event.metro.repository.OrganizerEventRepository;
 import com.event.metro.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -14,7 +12,6 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
 import java.util.List;
 
 @Service

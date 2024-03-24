@@ -1,7 +1,6 @@
 package com.event.metro.controller;
 
 import com.event.metro.model.Event;
-import com.event.metro.model.OrganizerEvents;
 import com.event.metro.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
