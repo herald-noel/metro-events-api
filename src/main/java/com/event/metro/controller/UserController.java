@@ -22,11 +22,6 @@ public class UserController {
         return "User access level.";
     }
 
-    @GetMapping("/organizer/events")
-    public ResponseEntity<List<OrganizerEvents>> showOrganizerEvents() {
-        return userService.getAllOrganizerEvents();
-    }
-
     @GetMapping("/allEvents")
     public ResponseEntity<List<Event>> showAllEvents() {
         return userService.getAllEvents();

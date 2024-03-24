@@ -3,6 +3,7 @@ package com.event.metro.service;
 import com.event.metro.model.Event;
 import com.event.metro.model.OrganizerEvents;
 import com.event.metro.model.User;
+import com.event.metro.repository.EventRepository;
 import com.event.metro.repository.OrganizerEventRepository;
 import com.event.metro.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,7 +22,7 @@ public class UserService implements UserDetailsService {
     @Autowired
     UserRepository userRepository;
     @Autowired
-    OrganizerEventRepository organizerEventRepository;
+    EventRepository eventRepository;
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
@@ -34,21 +35,7 @@ public class UserService implements UserDetailsService {
                 .orElseThrow(() -> new UsernameNotFoundException("user id not found"));
     }
 
-    public ResponseEntity<List<OrganizerEvents>> getAllOrganizerEvents() {
-        return new ResponseEntity<>(organizerEventRepository.findAll(), HttpStatus.OK);
-    }
-
     public ResponseEntity<List<Event>> getAllEvents() {
-        List<Event> allEvents = new ArrayList<>();
-        List<OrganizerEvents> organizerEventsList = organizerEventRepository.findAll();
-        // Iterate over each document
-        for (OrganizerEvents organizerEvents : organizerEventsList) {
-            // Extract the events from each entity
-            List<Event> events = organizerEvents.getEvents();
-            if (!events.isEmpty()) {
-                allEvents.addAll(events);
-            }
-        }
-        return new ResponseEntity<>(allEvents, HttpStatus.OK);
+        return new ResponseEntity<>(eventRepository.findAll(), HttpStatus.OK);
     }
 }
