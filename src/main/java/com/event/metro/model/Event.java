@@ -1,10 +1,12 @@
 package com.event.metro.model;
 
+import jakarta.servlet.http.Part;
 import lombok.Getter;
 import lombok.NonNull;
 import lombok.Setter;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
+import org.springframework.security.core.parameters.P;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -52,5 +54,10 @@ public class Event {
     public void addReview(String username, String message) {
         Review review = new Review(username, message);
         this.reviewList.add(review);
+    }
+
+    public void addParticipant(String username) {
+        Participant participant = new Participant(username);
+        this.participantList.add(participant);
     }
 }

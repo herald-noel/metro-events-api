@@ -4,9 +4,7 @@ import com.event.metro.model.Event;
 import com.event.metro.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -24,5 +22,10 @@ public class UserController {
     @GetMapping("/allEvents")
     public ResponseEntity<List<Event>> showAllEvents() {
         return userService.getAllEvents();
+    }
+
+    @PostMapping("join/{username}/{eventId}")
+    public int joinEvent(@PathVariable String username, @PathVariable String eventId) {
+        return userService.userJoinEvent(eventId, username);
     }
 }
