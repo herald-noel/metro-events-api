@@ -18,6 +18,7 @@ public class Event {
     @NonNull String dateStart;
     @NonNull String dateEnd;
     @NonNull String description;
+    boolean active;
     List<Participant> participantList;
 
     public Event() {
@@ -36,5 +37,6 @@ public class Event {
         this.dateEnd = dateEnd;
         this.description = description;
         this.participantList = new ArrayList<>();
+        this.active = true;
     }
 }
