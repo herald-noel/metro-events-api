@@ -28,7 +28,11 @@ public class OrganizerController {
 
     @PostMapping("/accept")
     public String acceptParticipant(@RequestBody RequestJoinDTO requestJoinDTO) {
-        System.out.println("inside");
         return organizerService.updateSuccessStatus(requestJoinDTO.getEventId(), requestJoinDTO.getParticipantId());
+    }
+
+    @PostMapping("/decline")
+    public String declineParticipant(@RequestBody RequestJoinDTO requestJoinDTO) {
+        return organizerService.updateDeclineStatus(requestJoinDTO.getEventId(), requestJoinDTO.getParticipantId());
     }
 }

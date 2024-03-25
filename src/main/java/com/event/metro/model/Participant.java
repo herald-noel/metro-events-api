@@ -11,9 +11,9 @@ public class Participant {
     String participantId;
     String username;
     /*
-     * 0 - For Approval
      * 1 - Approve
-     * 2 - Decline
+     * 0 - For Approval
+     * -1 - Decline
      */
     int status;
 

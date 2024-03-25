@@ -27,6 +27,14 @@ public class OrganizerService {
     }
 
     public String updateSuccessStatus(String eventId, String participantId) {
+        return changeParticipantStatus(eventId, participantId, 1);
+    }
+
+    public String updateDeclineStatus(String eventId, String participantId) {
+        return changeParticipantStatus(eventId, participantId, -1);
+    }
+
+    public String changeParticipantStatus(String eventId, String participantId, int status) {
         Event event = eventRepository.findById(eventId).orElse(null);
         if (event != null) {
             // Find the participant by participantId
@@ -36,7 +44,7 @@ public class OrganizerService {
 
             // Update participant status if found
             if (participantToUpdate != null) {
-                participantToUpdate.setStatus(1);
+                participantToUpdate.setStatus(status);
             } else {
                 return "user not found.";
             }
