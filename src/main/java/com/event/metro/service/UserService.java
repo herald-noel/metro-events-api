@@ -74,7 +74,7 @@ public class UserService implements UserDetailsService {
         return new ResponseEntity<>(eventObj.getReviewList(), HttpStatus.OK);
     }
 
-    public int requestPromotion(String username, String role) {
+    public int requestPromotion(String username) {
         /*
          * 0 - Request already exist
          * 1 - Request sent successfully.
@@ -82,7 +82,7 @@ public class UserService implements UserDetailsService {
         if (requestRoleRepository.findByUsername(username).isPresent()) {
             return 0;
         }
-        RequestRole requestRole = new RequestRole(username, role.toUpperCase());
+        RequestRole requestRole = new RequestRole(username);
         requestRoleRepository.save(requestRole);
         return 1;
     }
