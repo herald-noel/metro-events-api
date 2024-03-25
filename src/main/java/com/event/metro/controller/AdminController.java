@@ -20,7 +20,7 @@ public class AdminController {
         return "Admin access level.";
     }
 
-    @GetMapping("/{id}/{role}")
+    @PostMapping("/{id}/{role}")
     public ResponseEntity<User> promoteUser(@PathVariable String id, @PathVariable String role) {
         return adminService.promoteUser(id, role);
     }

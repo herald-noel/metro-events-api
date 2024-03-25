@@ -8,7 +8,7 @@ import java.util.UUID;
 @Getter
 @Setter
 public class Participant {
-    String participantId;
+    String id;
     String username;
     /*
      * 1 - Approve
@@ -18,7 +18,7 @@ public class Participant {
     int status;
 
     public Participant(String username) {
-        this.participantId = UUID.randomUUID().toString();
+        this.id = UUID.randomUUID().toString();
         this.username = username;
         this.status = 0;
     }

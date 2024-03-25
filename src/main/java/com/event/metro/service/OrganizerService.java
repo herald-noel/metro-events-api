@@ -5,9 +5,12 @@ import com.event.metro.model.Participant;
 import com.event.metro.model.dto.EventDTO;
 import com.event.metro.repository.EventRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -26,32 +29,32 @@ public class OrganizerService {
         return ResponseEntity.ok(eventRepository.findById(eventId));
     }
 
-    public String updateSuccessStatus(String eventId, String participantId) {
-        return changeParticipantStatus(eventId, participantId, 1);
+    public ResponseEntity<List<Participant>> updateSuccessStatus(String eventId, String participantId) {
+        return new ResponseEntity<>(changeParticipantStatus(eventId, participantId, 1), HttpStatus.OK);
     }
 
-    public String updateDeclineStatus(String eventId, String participantId) {
-        return changeParticipantStatus(eventId, participantId, -1);
+    public ResponseEntity<List<Participant>> updateDeclineStatus(String eventId, String participantId) {
+        return new ResponseEntity<>(changeParticipantStatus(eventId, participantId, -1), HttpStatus.OK);
     }
 
-    public String changeParticipantStatus(String eventId, String participantId, int status) {
+    public List<Participant> changeParticipantStatus(String eventId, String participantId, int status) {
         Event event = eventRepository.findById(eventId).orElse(null);
         if (event != null) {
             // Find the participant by participantId
             Participant participantToUpdate = event.getParticipantList().stream()
-                    .filter(participant -> participant.getParticipantId().equals(participantId))
+                    .filter(participant -> participant.getId().equals(participantId))
                     .findFirst().orElse(null);
 
             // Update participant status if found
             if (participantToUpdate != null) {
                 participantToUpdate.setStatus(status);
             } else {
-                return "user not found.";
+                return new ArrayList<>();
             }
 
             eventRepository.save(event);
-            return "success";
+            return event.getParticipantList();
         }
-        return "event not found";
+        return new ArrayList<>();
     }
 }

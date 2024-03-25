@@ -1,6 +1,7 @@
 package com.event.metro.controller;
 
 import com.event.metro.model.Event;
+import com.event.metro.model.Participant;
 import com.event.metro.model.dto.EventDTO;
 import com.event.metro.model.dto.RequestJoinDTO;
 import com.event.metro.service.OrganizerService;
@@ -8,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
 import java.util.Optional;
 
 @RestController
@@ -27,12 +29,12 @@ public class OrganizerController {
     }
 
     @PostMapping("/accept")
-    public String acceptParticipant(@RequestBody RequestJoinDTO requestJoinDTO) {
+    public ResponseEntity<List<Participant>>acceptParticipant(@RequestBody RequestJoinDTO requestJoinDTO) {
         return organizerService.updateSuccessStatus(requestJoinDTO.getEventId(), requestJoinDTO.getParticipantId());
     }
 
     @PostMapping("/decline")
-    public String declineParticipant(@RequestBody RequestJoinDTO requestJoinDTO) {
+    public ResponseEntity<List<Participant>> declineParticipant(@RequestBody RequestJoinDTO requestJoinDTO) {
         return organizerService.updateDeclineStatus(requestJoinDTO.getEventId(), requestJoinDTO.getParticipantId());
     }
 }
