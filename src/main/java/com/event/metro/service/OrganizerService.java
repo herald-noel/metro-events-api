@@ -7,6 +7,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
+import java.util.Optional;
+
 @Service
 public class OrganizerService {
 
@@ -17,5 +19,9 @@ public class OrganizerService {
         Event newEvent = new Event(event.getOwner(), event.getTitle(), event.getTimeStart(), event.getTimeEnd(),
                 event.getDateStart(), event.getDateEnd(), event.getDescription());
         return ResponseEntity.ok(eventRepository.save(newEvent));
+    }
+
+    public ResponseEntity<Optional<Event>> findByEventId(String eventId) {
+        return ResponseEntity.ok(eventRepository.findById(eventId));
     }
 }

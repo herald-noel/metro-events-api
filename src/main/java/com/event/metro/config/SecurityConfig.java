@@ -53,13 +53,12 @@ public class SecurityConfig {
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         http
-                .cors(AbstractHttpConfigurer::disable)
                 .csrf(AbstractHttpConfigurer::disable)
                 .authorizeHttpRequests(auth -> {
                     auth.requestMatchers("/api/v1/auth/**").permitAll();
                     auth.requestMatchers("/api/v1/admins/**").permitAll();
                     auth.requestMatchers("/api/v1/organizers/**").permitAll();
-                    auth.requestMatchers("/api/v1/users/**").permitAll();
+                    auth.requestMatchers("/api/v1/users/**").hasRole("USER");
                     auth.anyRequest().authenticated();
                 }).oauth2ResourceServer(server -> server.jwt(jwt -> jwt.jwtAuthenticationConverter(jwtAuthenticationConverter())))
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS));
