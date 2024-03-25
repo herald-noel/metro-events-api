@@ -62,15 +62,15 @@ public class UserService implements UserDetailsService {
         return 1;
     }
 
-    public int addUserReview(String eventId, ReviewDTO reviewDTO) {
+    public ResponseEntity<List<Review>> addUserReview(String eventId, ReviewDTO reviewDTO) {
         Review review = new Review(reviewDTO.getUsername(), reviewDTO.getComment());
         Optional<Event> event = eventRepository.findById(eventId);
         if (event.isEmpty()) {
-            return 0;
+            return null;
         }
         Event eventObj = event.get();
         eventObj.getReviewList().add(review);
         eventRepository.save(eventObj);
-        return 1;
+        return new ResponseEntity<>(eventObj.getReviewList(), HttpStatus.OK);
     }
 }
