@@ -86,4 +86,8 @@ public class UserService implements UserDetailsService {
         requestRoleRepository.save(requestRole);
         return 1;
     }
+
+    public Optional<User> findByUsername(String username) {
+        return userRepository.findByUsername(username);
+    }
 }
