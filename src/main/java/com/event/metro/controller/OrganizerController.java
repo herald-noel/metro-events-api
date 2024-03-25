@@ -2,6 +2,7 @@ package com.event.metro.controller;
 
 import com.event.metro.model.Event;
 import com.event.metro.model.dto.EventDTO;
+import com.event.metro.model.dto.RequestJoinDTO;
 import com.event.metro.service.OrganizerService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -23,5 +24,11 @@ public class OrganizerController {
     @GetMapping("/event/details/{id}")
     public ResponseEntity<Optional<Event>> getEventById(@PathVariable String id) {
         return organizerService.findByEventId(id);
+    }
+
+    @PostMapping("/accept")
+    public String acceptParticipant(@RequestBody RequestJoinDTO requestJoinDTO) {
+        System.out.println("inside");
+        return organizerService.updateSuccessStatus(requestJoinDTO.getEventId(), requestJoinDTO.getParticipantId());
     }
 }
