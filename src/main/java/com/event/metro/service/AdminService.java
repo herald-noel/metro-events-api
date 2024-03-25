@@ -1,9 +1,12 @@
 package com.event.metro.service;
 
+import com.event.metro.model.RequestRole;
 import com.event.metro.model.Role;
 import com.event.metro.model.User;
+import com.event.metro.repository.RequestRoleRepository;
 import com.event.metro.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.stereotype.Service;
@@ -17,6 +20,8 @@ public class AdminService {
     private UserService userService;
     @Autowired
     private UserRepository userRepository;
+    @Autowired
+    private RequestRoleRepository requestRoleRepository;
 
     public ResponseEntity<User> promoteUser(String userId, String newAuthority) {
         User user = userService.findById(userId);
@@ -31,5 +36,9 @@ public class AdminService {
         }
         User updatedUser = userRepository.save(user);
         return ResponseEntity.ok(updatedUser);
+    }
+
+    public ResponseEntity<List<RequestRole>> getAllRequest() {
+        return new ResponseEntity<>(requestRoleRepository.findAll(), HttpStatus.OK);
     }
 }
