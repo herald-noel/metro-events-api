@@ -2,7 +2,9 @@ package com.event.metro.service;
 
 import com.event.metro.model.Event;
 import com.event.metro.model.Participant;
+import com.event.metro.model.Review;
 import com.event.metro.model.User;
+import com.event.metro.model.dto.ReviewDTO;
 import com.event.metro.repository.EventRepository;
 import com.event.metro.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -56,6 +58,18 @@ public class UserService implements UserDetailsService {
             }
         }
         eventObj.addParticipant(username);
+        eventRepository.save(eventObj);
+        return 1;
+    }
+
+    public int addUserReview(String eventId, ReviewDTO reviewDTO) {
+        Review review = new Review(reviewDTO.getUsername(), reviewDTO.getComment());
+        Optional<Event> event = eventRepository.findById(eventId);
+        if (event.isEmpty()) {
+            return 0;
+        }
+        Event eventObj = event.get();
+        eventObj.getReviewList().add(review);
         eventRepository.save(eventObj);
         return 1;
     }

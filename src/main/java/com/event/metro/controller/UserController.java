@@ -1,6 +1,7 @@
 package com.event.metro.controller;
 
 import com.event.metro.model.Event;
+import com.event.metro.model.dto.ReviewDTO;
 import com.event.metro.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -27,5 +28,10 @@ public class UserController {
     @PostMapping("join/{username}/{eventId}")
     public int joinEvent(@PathVariable String username, @PathVariable String eventId) {
         return userService.userJoinEvent(eventId, username);
+    }
+
+    @PostMapping("/event/{eventId}/review")
+    public int addUserReview(@PathVariable String eventId, @RequestBody ReviewDTO reviewDTO) {
+        return userService.addUserReview(eventId, reviewDTO);
     }
 }
