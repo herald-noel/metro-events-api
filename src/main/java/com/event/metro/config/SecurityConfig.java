@@ -58,7 +58,7 @@ public class SecurityConfig {
                     auth.requestMatchers("/api/v1/auth/**").permitAll();
                     auth.requestMatchers("/api/v1/admins/**").permitAll();
                     auth.requestMatchers("/api/v1/organizers/**").permitAll();
-                    auth.requestMatchers("/api/v1/users/**").hasRole("USER");
+                    auth.requestMatchers("/api/v1/users/**").hasAnyRole("USER", "ORGANIZER");
                     auth.anyRequest().authenticated();
                 }).oauth2ResourceServer(server -> server.jwt(jwt -> jwt.jwtAuthenticationConverter(jwtAuthenticationConverter())))
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS));
