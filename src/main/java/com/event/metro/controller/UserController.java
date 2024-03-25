@@ -2,6 +2,7 @@ package com.event.metro.controller;
 
 import com.event.metro.model.Event;
 import com.event.metro.model.Review;
+import com.event.metro.model.dto.RequestRoleDTO;
 import com.event.metro.model.dto.ReviewDTO;
 import com.event.metro.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -35,4 +36,10 @@ public class UserController {
     public ResponseEntity<List<Review>>addUserReview(@PathVariable String eventId, @RequestBody ReviewDTO reviewDTO) {
         return userService.addUserReview(eventId, reviewDTO);
     }
+
+    @PostMapping("/request")
+    public int userRequestRole(@RequestBody RequestRoleDTO requestRoleDTO) {
+       return userService.requestPromotion(requestRoleDTO.getUsername(), requestRoleDTO.getRequestRole());
+    }
 }
+

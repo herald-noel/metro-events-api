@@ -1,11 +1,9 @@
 package com.event.metro.service;
 
-import com.event.metro.model.Event;
-import com.event.metro.model.Participant;
-import com.event.metro.model.Review;
-import com.event.metro.model.User;
+import com.event.metro.model.*;
 import com.event.metro.model.dto.ReviewDTO;
 import com.event.metro.repository.EventRepository;
+import com.event.metro.repository.RequestRoleRepository;
 import com.event.metro.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -24,6 +22,8 @@ public class UserService implements UserDetailsService {
     UserRepository userRepository;
     @Autowired
     EventRepository eventRepository;
+    @Autowired
+    RequestRoleRepository requestRoleRepository;
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
@@ -72,5 +72,18 @@ public class UserService implements UserDetailsService {
         eventObj.getReviewList().add(review);
         eventRepository.save(eventObj);
         return new ResponseEntity<>(eventObj.getReviewList(), HttpStatus.OK);
+    }
+
+    public int requestPromotion(String username, String role) {
+        /*
+         * 0 - Request already exist
+         * 1 - Request sent successfully.
+         */
+        if (requestRoleRepository.findByUsername(username).isPresent()) {
+            return 0;
+        }
+        RequestRole requestRole = new RequestRole(username, role.toUpperCase());
+        requestRoleRepository.save(requestRole);
+        return 1;
     }
 }
