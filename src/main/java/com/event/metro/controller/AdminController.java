@@ -2,6 +2,8 @@ package com.event.metro.controller;
 
 import com.event.metro.model.RequestRole;
 import com.event.metro.model.User;
+import com.event.metro.repository.RequestRoleRepository;
+import com.event.metro.repository.UserRepository;
 import com.event.metro.service.AdminService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -31,12 +33,12 @@ public class AdminController {
     }
 
     @PostMapping("/organizer/accept")
-    public ResponseEntity<User> acceptUserOrganizer(@RequestBody String userId) {
-        return adminService.adminAcceptUserOrganizer(userId);
+    public ResponseEntity<User> acceptUserOrganizer(@RequestBody String requestId) {
+        return adminService.adminAcceptUserOrganizer(requestId);
     }
 
     @PostMapping("/organizer/decline")
-    public String declineUserOrganizer(@RequestBody String userId) {
-        return adminService.adminDeclineUserOrganizer(userId);
+    public String declineUserOrganizer(@RequestBody String requestId) {
+        return adminService.adminDeclineUserOrganizer(requestId);
     }
 }
