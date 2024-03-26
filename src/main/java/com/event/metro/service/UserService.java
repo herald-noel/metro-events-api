@@ -38,7 +38,10 @@ public class UserService implements UserDetailsService {
     }
 
     public ResponseEntity<List<Event>> getAllEvents() {
-        return new ResponseEntity<>(eventRepository.findAll(), HttpStatus.OK);
+        List<Event> events = eventRepository.findAll();
+        List<Event> userEvents = (events.stream().filter(Event::isActive).toList());
+
+        return ResponseEntity.ok(userEvents);
     }
 
     public ResponseEntity<List<Event>> findUserEventsByUsername(String username) {
