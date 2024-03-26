@@ -26,6 +26,11 @@ public class UserController {
         return userService.getAllEvents();
     }
 
+    @GetMapping("events/{userId}")
+    public ResponseEntity<List<Event>> findEventsByUsername(@PathVariable String userId) {
+        return userService.findUserEventsByUsername(userId);
+    }
+
     @PostMapping("join/{username}/{eventId}")
     public int joinEvent(@PathVariable String username, @PathVariable String eventId) {
         return userService.userJoinEvent(eventId, username);

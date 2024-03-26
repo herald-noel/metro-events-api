@@ -15,6 +15,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 public class UserService implements UserDetailsService {
@@ -38,6 +39,17 @@ public class UserService implements UserDetailsService {
 
     public ResponseEntity<List<Event>> getAllEvents() {
         return new ResponseEntity<>(eventRepository.findAll(), HttpStatus.OK);
+    }
+
+    public ResponseEntity<List<Event>> findUserEventsByUsername(String username) {
+        List<Event> events = eventRepository.findAll();
+
+        List<Event> userEvents = events.stream()
+                .filter(event -> event.getParticipantList().stream()
+                        .anyMatch(participant -> participant.getUsername().equals(username) && participant.getStatus() == 1))
+                .collect(Collectors.toList());
+
+        return ResponseEntity.ok(userEvents);
     }
 
     public int userJoinEvent(String eventId, String username) {
