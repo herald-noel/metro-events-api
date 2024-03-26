@@ -51,5 +51,8 @@ public class UserController {
     public int userRequestRole(@RequestBody String username) {
        return userService.requestPromotion(username);
     }
+
+    @PostMapping("/event/{eventId}/cancel")
+    public int organizerCancelEvent(@PathVariable String eventId) {return userService.cancelEvent(eventId); }
 }
 

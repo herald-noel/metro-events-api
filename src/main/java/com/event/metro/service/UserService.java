@@ -98,6 +98,21 @@ public class UserService implements UserDetailsService {
         return new ResponseEntity<>(eventObj.getReviewList(), HttpStatus.OK);
     }
 
+    public int cancelEvent(String eventId) {
+        /*
+         * 0 - failed
+         * 1 - success
+         */
+        Optional<Event> event = eventRepository.findById(eventId);
+        if (event.isEmpty()) {
+            return 0;
+        }
+        Event eventObj = event.get();
+        eventObj.setActive(false);
+        eventRepository.save(eventObj);
+        return 1;
+    }
+
     public int requestPromotion(String username) {
         /*
          * 0 - Request already exist
