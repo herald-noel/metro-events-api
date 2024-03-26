@@ -44,6 +44,15 @@ public class UserService implements UserDetailsService {
         return ResponseEntity.ok(userEvents);
     }
 
+    public ResponseEntity<List<Event>> getAllOrganizerEventsByUsername(String username) {
+        List<Event> events = eventRepository.findAll();
+
+        List<Event> userEvents = events.stream()
+                .filter(event -> event.getOwner().equals(username) && event.isActive()).collect(Collectors.toList());
+
+        return ResponseEntity.ok(userEvents);
+    }
+
     public ResponseEntity<List<Event>> findUserEventsByUsername(String username) {
         List<Event> events = eventRepository.findAll();
 

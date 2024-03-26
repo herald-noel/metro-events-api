@@ -27,6 +27,11 @@ public class UserController {
         return userService.getAllEvents();
     }
 
+    @GetMapping("organizer/{username}")
+    public ResponseEntity<List<Event>> getAllOrganizerEventsByUsername(@PathVariable String username) {
+        return userService.getAllOrganizerEventsByUsername(username);
+    }
+
     @GetMapping("events/{userId}")
     public ResponseEntity<List<Event>> findEventsByUsername(@PathVariable String userId) {
         return userService.findUserEventsByUsername(userId);
