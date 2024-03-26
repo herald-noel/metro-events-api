@@ -102,4 +102,8 @@ public class UserService implements UserDetailsService {
     public Optional<User> findByUsername(String username) {
         return userRepository.findByUsername(username);
     }
+
+    public ResponseEntity<List<User>> getAllUsers() {
+      return new ResponseEntity<List<User>>(userRepository.findAll(), HttpStatus.OK);
+    }
 }

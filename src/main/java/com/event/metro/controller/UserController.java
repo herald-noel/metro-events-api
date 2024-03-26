@@ -2,6 +2,7 @@ package com.event.metro.controller;
 
 import com.event.metro.model.Event;
 import com.event.metro.model.Review;
+import com.event.metro.model.User;
 import com.event.metro.model.dto.ReviewDTO;
 import com.event.metro.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,9 +17,9 @@ public class UserController {
     @Autowired
     UserService userService;
 
-    @GetMapping("/")
-    public String helloUserController() {
-        return "User access level.";
+    @GetMapping
+    public ResponseEntity<List<User>> getAllUsers() {
+        return userService.getAllUsers();
     }
 
     @GetMapping("/allEvents")
