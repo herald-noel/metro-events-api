@@ -27,6 +27,16 @@ public class AdminController {
 
     @GetMapping("/organizer/requests")
     public ResponseEntity<List<RequestRole>> showAllRequest() {
-       return adminService.getAllRequest();
+        return adminService.getAllRequest();
+    }
+
+    @PostMapping("/organizer/accept")
+    public ResponseEntity<User> acceptUserOrganizer(@RequestBody String userId) {
+        return adminService.adminAcceptUserOrganizer(userId);
+    }
+
+    @PostMapping("/organizer/decline")
+    public String declineUserOrganizer(@RequestBody String userId) {
+        return adminService.adminDeclineUserOrganizer(userId);
     }
 }

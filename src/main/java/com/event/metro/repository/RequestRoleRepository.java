@@ -9,4 +9,5 @@ public interface RequestRoleRepository extends MongoRepository<RequestRole, Stri
 
     Optional<RequestRole> findByUsername(String username);
 
+    void deleteByUsername(String username);
 }

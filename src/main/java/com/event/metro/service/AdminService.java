@@ -44,11 +44,27 @@ public class AdminService {
         return ResponseEntity.ok(updatedUser);
     }
 
+    public ResponseEntity<User> adminAcceptUserOrganizer(String userId) {
+        Optional<User> user = userRepository.findById(userId);
+        removeRequest(user.get().getUsername());
+        return promoteUser(userId, "organizer");
+    }
+
     public Optional<Role> getRoleByAuthority(String roleName) {
-       return roleRepository.findByAuthority(roleName);
+        return roleRepository.findByAuthority(roleName);
     }
 
     public ResponseEntity<List<RequestRole>> getAllRequest() {
         return new ResponseEntity<>(requestRoleRepository.findAll(), HttpStatus.OK);
+    }
+
+    public void removeRequest(String username) {
+        requestRoleRepository.deleteByUsername(username);
+    }
+
+    public String adminDeclineUserOrganizer(String userId) {
+        User user = userService.findById(userId);
+        removeRequest(user.getUsername());
+        return "success";
     }
 }
