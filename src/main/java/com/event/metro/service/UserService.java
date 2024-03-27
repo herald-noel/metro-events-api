@@ -142,24 +142,35 @@ public class UserService implements UserDetailsService {
         return new ResponseEntity<>(userRepository.findAll(), HttpStatus.OK);
     }
 
-    public int addUpvote(String eventId, String username) {
+    public int upvoteEvent(String eventId, String username) {
         /*
          * 0 - remove
          * 1 - add
          */
-        Query query = new Query(Criteria.where("_id").is(eventId).and("upvoteList.username").is(username));
-        // Check if the user exists in the upvoteList array
-        boolean userExists = mongoTemplate.exists(query, Event.class);
-        if (userExists) {
-            // If the user exists, remove it
-            Update update = new Update().pull("upvoteList", new Username(username));
-            mongoTemplate.updateFirst(query, update, Event.class);
+        if (isUserUpvoteEvent(eventId, username)) {
+            removeUpvote(eventId, username);
             return 0;
         } else {
-            // If the user does not exist, add it
-            Update update = new Update().addToSet("upvoteList", new Username(username));
-            mongoTemplate.upsert(new Query(Criteria.where("_id").is(eventId)), update, Event.class);
+            addUpvote(eventId, username);
             return 1;
         }
     }
+
+    public boolean isUserUpvoteEvent(String eventId, String username) {
+        Query query = new Query(Criteria.where("_id").is(eventId).and("upvoteList.username").is(username));
+        return mongoTemplate.exists(query, Event.class);
+    }
+
+    private void removeUpvote(String eventId, String username) {
+        Query query = new Query(Criteria.where("_id").is(eventId).and("upvoteList.username").is(username));
+        Update update = new Update().pull("upvoteList", new Username(username));
+        mongoTemplate.updateFirst(query, update, Event.class);
+    }
+
+    private void addUpvote(String eventId, String username) {
+        Update update = new Update().addToSet("upvoteList", new Username(username));
+        mongoTemplate.upsert(new Query(Criteria.where("_id").is(eventId)), update, Event.class);
+    }
+
+
 }
