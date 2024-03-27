@@ -54,5 +54,10 @@ public class UserController {
 
     @PostMapping("/event/{eventId}/cancel")
     public int organizerCancelEvent(@PathVariable String eventId) {return userService.cancelEvent(eventId); }
+
+    @PostMapping("/{eventId}/upvote")
+    public int upvoteEvent(@PathVariable String eventId, @RequestBody String username) {
+        return userService.addUpvote(eventId, username);
+    }
 }
 
