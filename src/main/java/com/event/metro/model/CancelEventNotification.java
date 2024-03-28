@@ -8,7 +8,6 @@ import lombok.Setter;
 public class CancelEventNotification extends Notification {
     String eventId;
 
-
     public CancelEventNotification(String eventId, String title, String message) {
         super(title, message);
         this.eventId = eventId;

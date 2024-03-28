@@ -19,15 +19,13 @@ public class Notification implements NotificationInterface {
         this.isSeen = false;
     }
 
-
-
     @Override
     public String showTitle() {
-        return null;
+        return getTitle();
     }
 
     @Override
     public String showMessage() {
-        return null;
+        return getMessage();
     }
 }
