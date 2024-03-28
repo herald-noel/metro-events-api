@@ -7,7 +7,6 @@ import com.event.metro.model.User;
 import com.event.metro.model.dto.ReviewDTO;
 import com.event.metro.service.UserService;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -84,6 +83,16 @@ public class UserController {
     @GetMapping("notifications/{username}")
     public ResponseEntity<List<Notification>> getNotification(@PathVariable String username) {
         return userService.getNotificationByUsername(username);
+    }
+
+    @GetMapping("notifaction/{username}/IsSeen")
+    public boolean setNotificationIsSeen(@PathVariable String username) {
+        return userService.setNotificationIsSeen(username);
+    }
+
+    @GetMapping("notification/{username}/checkIsSeen")
+    public boolean checkNotificationIsSeen(@PathVariable String username) {
+        return userService.checkNotificationIsSeen(username);
     }
 }
 

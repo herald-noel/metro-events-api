@@ -209,4 +209,33 @@ public class UserService implements UserDetailsService {
         Collections.reverse(notifications);
         return new ResponseEntity<>(notifications, HttpStatus.OK);
     }
+
+    public boolean setNotificationIsSeen(String username) {
+        User user = (User) loadUserByUsername(username);
+        List<Notification> notifications = user.getNotificationList();
+        for(Notification notification: notifications) {
+            try {
+                notification.setSeen(true);
+            } catch (Exception e) {
+                return false;
+            }
+        }
+        userRepository.save(user);
+        return true;
+    }
+
+    public boolean checkNotificationIsSeen(String username) {
+        User user = (User) loadUserByUsername(username);
+        List<Notification> notifications = user.getNotificationList();
+        for(Notification notification: notifications) {
+            try {
+                if(!notification.isSeen()) {
+                    return false;
+                }
+            } catch (Exception e) {
+                return true;
+            }
+        }
+        return true;
+    }
 }
