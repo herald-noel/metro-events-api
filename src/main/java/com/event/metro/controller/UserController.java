@@ -57,8 +57,9 @@ public class UserController {
         return userService.requestPromotion(username);
     }
 
-    @PostMapping("/event/{eventId}/cancel")
-    public int organizerCancelEvent(@PathVariable String eventId) {
+    @PostMapping("/event/{eventId}/{title}/{message}/cancel")
+    public int organizerCancelEvent(@PathVariable String eventId, @PathVariable String title, @PathVariable String message) {
+        userService.addNotification(eventId, title, message);
         return userService.cancelEvent(eventId);
     }
 
@@ -66,7 +67,7 @@ public class UserController {
     public int upvoteEvent(@PathVariable String eventId, @RequestBody String username) {
         return userService.upvoteEvent(eventId, username);
     }
-    @GetMapping("/{eventId}/{title}/{message}")
+    @PostMapping("/{eventId}/{title}/{message}")
     public boolean addNotification(@PathVariable String eventId, @PathVariable String title, @PathVariable String message) {
         return userService.addNotification(eventId, title, message);
     }
