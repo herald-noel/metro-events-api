@@ -80,7 +80,7 @@ public class User implements UserDetails {
     }
 
     public void addNotification(String eventId, String message) {
-        Notification notification = new Notification(eventId, message);
-        this.notificationList.add(notification);
+//        Notification notification = new Notification(eventId, message);
+//        this.notificationList.add(notification);
     }
 }

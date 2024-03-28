@@ -169,5 +169,7 @@ public class UserService implements UserDetailsService {
         mongoTemplate.upsert(new Query(Criteria.where("_id").is(eventId)), update, Event.class);
     }
 
-
+    private void addNotification(String eventId, String description) {
+//        Notification notification = new Notification(eventId, description);
+    }
 }

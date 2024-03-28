@@ -1,17 +1,33 @@
 package com.event.metro.model;
 
+import com.event.metro.repository.NotificationInterface;
+import lombok.Data;
+
 import java.util.UUID;
 
-public class Notification {
+@Data
+public class Notification implements NotificationInterface {
     String id;
-    String eventId;
     boolean isSeen;
+    String title;
     String message;
 
-    public Notification(String eventId, String message) {
+    public Notification(String title, String message) {
         this.id = UUID.randomUUID().toString();
-        this.eventId = eventId;
-        this.isSeen = false;
+        this.title = title;
         this.message = message;
+        this.isSeen = false;
+    }
+
+
+
+    @Override
+    public String showTitle() {
+        return null;
+    }
+
+    @Override
+    public String showMessage() {
+        return null;
     }
 }
