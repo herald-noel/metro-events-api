@@ -30,7 +30,6 @@ public class UserService implements UserDetailsService {
     RequestRoleRepository requestRoleRepository;
     final
     MongoTemplate mongoTemplate;
-
     public UserService(UserRepository userRepository, EventRepository eventRepository, RequestRoleRepository requestRoleRepository, MongoTemplate mongoTemplate) {
         this.userRepository = userRepository;
         this.eventRepository = eventRepository;
@@ -169,7 +168,14 @@ public class UserService implements UserDetailsService {
         mongoTemplate.upsert(new Query(Criteria.where("_id").is(eventId)), update, Event.class);
     }
 
-    private void addNotification(String eventId, String description) {
-//        Notification notification = new Notification(eventId, description);
+    private List<String> getParticipantListByEventId(String eventId) {
+        Optional<Event> event = eventRepository.findById(eventId);
+        if(event.isEmpty()) {
+            return null;
+        }
+        Event eventObj = event.get();
+        return eventObj.getParticipantList().stream()
+                .map(Participant::getUsername)
+                .toList();
     }
 }
