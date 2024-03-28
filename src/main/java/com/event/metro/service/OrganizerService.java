@@ -29,6 +29,16 @@ public class OrganizerService {
     public ResponseEntity<Event> addOrganizerEvent(EventDTO event) {
         Event newEvent = new Event(event.getOwner(), event.getTitle(), event.getTimeStart(), event.getTimeEnd(),
                 event.getDateStart(), event.getDateEnd(), event.getDescription());
+        String title = "UPCOMING EVENT: " + event.getTitle();
+        String message = "A new event organized by " + event.getOwner() + ". Event starts on " + event.getDateStart();
+        Notification notification = new Notification(title, message);
+        List<User> userList = userRepository.findAll();
+        userList.forEach(user -> {
+            if (!user.getUsername().equals(event.getOwner())) {
+                user.getNotificationList().add(notification);
+                userRepository.save(user);
+            }
+        });
         return ResponseEntity.ok(eventRepository.save(newEvent));
     }
 
