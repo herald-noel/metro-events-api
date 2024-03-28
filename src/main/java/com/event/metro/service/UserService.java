@@ -99,10 +99,7 @@ public class UserService implements UserDetailsService {
     }
 
     public int cancelEvent(String eventId) {
-        /*
-         * 0 - failed
-         * 1 - success
-         */
+
         Optional<Event> event = eventRepository.findById(eventId);
         if (event.isEmpty()) {
             return 0;

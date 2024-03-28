@@ -28,6 +28,8 @@ public class User implements UserDetails {
 
     private Set<Role> authorities;
 
+    private List<Notification> notificationList;
+
     public User() {
         super();
         this.authorities = new HashSet<>();
@@ -39,6 +41,7 @@ public class User implements UserDetails {
         this.email = email;
         this.password = password;
         this.authorities = authorities;
+        this.notificationList = new ArrayList<>();
     }
 
     @Override
@@ -74,5 +77,10 @@ public class User implements UserDetails {
     @Override
     public boolean isEnabled() {
         return true;
+    }
+
+    public void addNotification(String eventId, String message) {
+        Notification notification = new Notification(eventId, message);
+        this.notificationList.add(notification);
     }
 }
