@@ -17,6 +17,7 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -202,4 +203,10 @@ public class UserService implements UserDetailsService {
         return true;
     }
 
+    public ResponseEntity<List<Notification>> getNotificationByUsername(String username) {
+        User user = (User) loadUserByUsername(username);
+        List<Notification> notifications = user.getNotificationList();
+        Collections.reverse(notifications);
+        return new ResponseEntity<>(notifications, HttpStatus.OK);
+    }
 }

@@ -1,6 +1,7 @@
 package com.event.metro.controller;
 
 import com.event.metro.model.Event;
+import com.event.metro.model.Notification;
 import com.event.metro.model.Review;
 import com.event.metro.model.User;
 import com.event.metro.model.dto.ReviewDTO;
@@ -77,6 +78,11 @@ public class UserController {
     @GetMapping("/{eventId}")
     public ResponseEntity<List<User>> getParticipantsList(@PathVariable String eventId) {
         return userService.getParticipantListByEventId(eventId);
+    }
+
+    @GetMapping("notifications/{username}")
+    public ResponseEntity<List<Notification>> getNotification(@PathVariable String username) {
+        return userService.getNotificationByUsername(username);
     }
 }
 
