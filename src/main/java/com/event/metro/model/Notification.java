@@ -12,6 +12,9 @@ public class Notification implements NotificationInterface {
     String title;
     String message;
 
+    public Notification() {
+    }
+
     public Notification(String title, String message) {
         this.id = UUID.randomUUID().toString();
         this.title = title;
