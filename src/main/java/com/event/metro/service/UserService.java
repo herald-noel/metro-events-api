@@ -5,7 +5,10 @@ import com.event.metro.model.dto.ReviewDTO;
 import com.event.metro.repository.EventRepository;
 import com.event.metro.repository.RequestRoleRepository;
 import com.event.metro.repository.UserRepository;
-import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.mongodb.core.MongoTemplate;
+import org.springframework.data.mongodb.core.query.Criteria;
+import org.springframework.data.mongodb.core.query.Query;
+import org.springframework.data.mongodb.core.query.Update;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -19,12 +22,21 @@ import java.util.stream.Collectors;
 
 @Service
 public class UserService implements UserDetailsService {
-    @Autowired
+    final
     UserRepository userRepository;
-    @Autowired
+    final
     EventRepository eventRepository;
-    @Autowired
+    final
     RequestRoleRepository requestRoleRepository;
+    final
+    MongoTemplate mongoTemplate;
+
+    public UserService(UserRepository userRepository, EventRepository eventRepository, RequestRoleRepository requestRoleRepository, MongoTemplate mongoTemplate) {
+        this.userRepository = userRepository;
+        this.eventRepository = eventRepository;
+        this.requestRoleRepository = requestRoleRepository;
+        this.mongoTemplate = mongoTemplate;
+    }
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
@@ -123,11 +135,39 @@ public class UserService implements UserDetailsService {
         return 1;
     }
 
-    public Optional<User> findByUsername(String username) {
-        return userRepository.findByUsername(username);
+    public ResponseEntity<List<User>> getAllUsers() {
+        return new ResponseEntity<>(userRepository.findAll(), HttpStatus.OK);
     }
 
-    public ResponseEntity<List<User>> getAllUsers() {
-      return new ResponseEntity<List<User>>(userRepository.findAll(), HttpStatus.OK);
+    public int upvoteEvent(String eventId, String username) {
+        /*
+         * 0 - remove
+         * 1 - add
+         */
+        if (isUserUpvoteEvent(eventId, username)) {
+            removeUpvote(eventId, username);
+            return 0;
+        } else {
+            addUpvote(eventId, username);
+            return 1;
+        }
     }
+
+    public boolean isUserUpvoteEvent(String eventId, String username) {
+        Query query = new Query(Criteria.where("_id").is(eventId).and("upvoteList.username").is(username));
+        return mongoTemplate.exists(query, Event.class);
+    }
+
+    private void removeUpvote(String eventId, String username) {
+        Query query = new Query(Criteria.where("_id").is(eventId).and("upvoteList.username").is(username));
+        Update update = new Update().pull("upvoteList", new Username(username));
+        mongoTemplate.updateFirst(query, update, Event.class);
+    }
+
+    private void addUpvote(String eventId, String username) {
+        Update update = new Update().addToSet("upvoteList", new Username(username));
+        mongoTemplate.upsert(new Query(Criteria.where("_id").is(eventId)), update, Event.class);
+    }
+
+
 }

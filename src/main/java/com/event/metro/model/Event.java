@@ -1,12 +1,10 @@
 package com.event.metro.model;
 
-import jakarta.servlet.http.Part;
 import lombok.Getter;
 import lombok.NonNull;
 import lombok.Setter;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
-import org.springframework.security.core.parameters.P;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -29,6 +27,7 @@ public class Event {
     boolean active;
     List<Participant> participantList;
     List<Review> reviewList;
+    List<Username> upvoteList;
 
     public Event() {
         this.participantList = new ArrayList<>();
@@ -48,6 +47,7 @@ public class Event {
         this.description = description;
         this.participantList = new ArrayList<>();
         this.reviewList = new ArrayList<>();
+        this.upvoteList = new ArrayList<>();
         this.active = true;
     }
 
