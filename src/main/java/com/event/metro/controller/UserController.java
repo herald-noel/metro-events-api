@@ -69,5 +69,10 @@ public class UserController {
     public boolean checkUpvoteUser(@PathVariable String eventId, @PathVariable String username) {
         return userService.isUserUpvoteEvent(eventId, username);
     }
+
+    @GetMapping("/{eventId}")
+    public List<String> getParticipantsList(@PathVariable String eventId) {
+        return userService.getParticipantListByEventId(eventId);
+    }
 }
 

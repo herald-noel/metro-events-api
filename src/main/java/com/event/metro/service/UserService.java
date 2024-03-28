@@ -16,6 +16,7 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -168,7 +169,7 @@ public class UserService implements UserDetailsService {
         mongoTemplate.upsert(new Query(Criteria.where("_id").is(eventId)), update, Event.class);
     }
 
-    private List<String> getParticipantListByEventId(String eventId) {
+    public List<String> getParticipantListByEventId(String eventId) {
         Optional<Event> event = eventRepository.findById(eventId);
         if(event.isEmpty()) {
             return null;
