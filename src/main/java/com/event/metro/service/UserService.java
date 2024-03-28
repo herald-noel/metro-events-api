@@ -169,14 +169,37 @@ public class UserService implements UserDetailsService {
         mongoTemplate.upsert(new Query(Criteria.where("_id").is(eventId)), update, Event.class);
     }
 
-    public List<String> getParticipantListByEventId(String eventId) {
+    public ResponseEntity<List<User>> getParticipantListByEventId(String eventId) {
         Optional<Event> event = eventRepository.findById(eventId);
         if(event.isEmpty()) {
             return null;
         }
         Event eventObj = event.get();
-        return eventObj.getParticipantList().stream()
+        List<String> usernames = eventObj.getParticipantList().stream()
                 .map(Participant::getUsername)
                 .toList();
+
+        List<User> users = new ArrayList<>();
+        for (String username : usernames) {
+            users.add((User) loadUserByUsername(username));
+        }
+
+        return new ResponseEntity<>(users, HttpStatus.OK);
     }
+
+    public boolean addNotification(String eventId, String title, String message) {
+        List<User> users = getParticipantListByEventId(eventId).getBody();
+        Notification notification = new CancelEventNotification(eventId, title, message);
+        assert users != null;
+        for(User user: users) {
+            try {
+                user.addNotification(notification);
+                userRepository.save(user);
+            } catch (Exception e) {
+                return false;
+            }
+        }
+        return true;
+    }
+
 }

@@ -6,6 +6,7 @@ import com.event.metro.model.User;
 import com.event.metro.model.dto.ReviewDTO;
 import com.event.metro.service.UserService;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -64,14 +65,17 @@ public class UserController {
     public int upvoteEvent(@PathVariable String eventId, @RequestBody String username) {
         return userService.upvoteEvent(eventId, username);
     }
-
+    @GetMapping("/{eventId}/{title}/{message}")
+    public boolean addNotification(@PathVariable String eventId, @PathVariable String title, @PathVariable String message) {
+        return userService.addNotification(eventId, title, message);
+    }
     @GetMapping("/upvote/check/{eventId}/{username}")
     public boolean checkUpvoteUser(@PathVariable String eventId, @PathVariable String username) {
         return userService.isUserUpvoteEvent(eventId, username);
     }
 
     @GetMapping("/{eventId}")
-    public List<String> getParticipantsList(@PathVariable String eventId) {
+    public ResponseEntity<List<User>> getParticipantsList(@PathVariable String eventId) {
         return userService.getParticipantListByEventId(eventId);
     }
 }

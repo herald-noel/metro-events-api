@@ -79,8 +79,7 @@ public class User implements UserDetails {
         return true;
     }
 
-    public void addNotification(String eventId, String message) {
-//        Notification notification = new Notification(eventId, message);
-//        this.notificationList.add(notification);
+    public void addNotification(Notification notification) {
+        this.notificationList.add(notification);
     }
 }
