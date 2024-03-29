@@ -86,7 +86,7 @@ public class UserController {
         return userService.getNotificationByUsername(username);
     }
 
-    @GetMapping("notifaction/{username}/IsSeen")
+    @GetMapping("notification/{username}/IsSeen")
     public boolean setNotificationIsSeen(@PathVariable String username) {
         return userService.setNotificationIsSeen(username);
     }
