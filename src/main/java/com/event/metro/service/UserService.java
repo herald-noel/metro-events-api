@@ -32,6 +32,7 @@ public class UserService implements UserDetailsService {
     RequestRoleRepository requestRoleRepository;
     final
     MongoTemplate mongoTemplate;
+
     public UserService(UserRepository userRepository, EventRepository eventRepository, RequestRoleRepository requestRoleRepository, MongoTemplate mongoTemplate) {
         this.userRepository = userRepository;
         this.eventRepository = eventRepository;
@@ -172,7 +173,7 @@ public class UserService implements UserDetailsService {
 
     public ResponseEntity<List<User>> getParticipantListByEventId(String eventId) {
         Optional<Event> event = eventRepository.findById(eventId);
-        if(event.isEmpty()) {
+        if (event.isEmpty()) {
             return null;
         }
         Event eventObj = event.get();
@@ -192,7 +193,7 @@ public class UserService implements UserDetailsService {
         List<User> users = getParticipantListByEventId(eventId).getBody();
         Notification notification = new CancelEventNotification(eventId, title, message);
         assert users != null;
-        for(User user: users) {
+        for (User user : users) {
             try {
                 user.addNotification(notification);
                 userRepository.save(user);
@@ -213,7 +214,7 @@ public class UserService implements UserDetailsService {
     public boolean setNotificationIsSeen(String username) {
         User user = (User) loadUserByUsername(username);
         List<Notification> notifications = user.getNotificationList();
-        for(Notification notification: notifications) {
+        for (Notification notification : notifications) {
             try {
                 notification.setSeen(true);
             } catch (Exception e) {
@@ -227,9 +228,9 @@ public class UserService implements UserDetailsService {
     public boolean checkNotificationIsSeen(String username) {
         User user = (User) loadUserByUsername(username);
         List<Notification> notifications = user.getNotificationList();
-        for(Notification notification: notifications) {
+        for (Notification notification : notifications) {
             try {
-                if(!notification.isSeen()) {
+                if (!notification.isSeen()) {
                     return false;
                 }
             } catch (Exception e) {
@@ -241,12 +242,12 @@ public class UserService implements UserDetailsService {
 
     public boolean addEventReminder(String eventId, String message) {
         Optional<Event> event = eventRepository.findById(eventId);
-        if(event.isEmpty()) {
+        if (event.isEmpty()) {
             return false;
         }
         Event eventObj = event.get();
         String eventName = eventObj.getTitle();
-        String title = eventName + ": REMINDER";
+        String title = "REMINDER: " + eventName;
         return addNotification(eventId, title, message);
     }
 }
