@@ -7,6 +7,7 @@ import com.event.metro.model.User;
 import com.event.metro.model.dto.ReviewDTO;
 import com.event.metro.service.UserService;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.parameters.P;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -93,6 +94,10 @@ public class UserController {
     @GetMapping("notification/{username}/checkIsSeen")
     public boolean checkNotificationIsSeen(@PathVariable String username) {
         return userService.checkNotificationIsSeen(username);
+    }
+    @GetMapping("notification/{eventId}/{message}/reminder")
+    public boolean checkNotificationIsSeen(@PathVariable String eventId, @PathVariable String message) {
+        return userService.addEventReminder(eventId, message);
     }
 }
 

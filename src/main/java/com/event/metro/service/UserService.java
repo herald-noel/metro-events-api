@@ -238,4 +238,8 @@ public class UserService implements UserDetailsService {
         }
         return true;
     }
+
+    public boolean addEventReminder(String eventId, String message) {
+        return addNotification(eventId, "REMINDER", message);
+    }
 }
