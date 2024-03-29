@@ -240,6 +240,13 @@ public class UserService implements UserDetailsService {
     }
 
     public boolean addEventReminder(String eventId, String message) {
-        return addNotification(eventId, "REMINDER", message);
+        Optional<Event> event = eventRepository.findById(eventId);
+        if(event.isEmpty()) {
+            return false;
+        }
+        Event eventObj = event.get();
+        String eventName = eventObj.getTitle();
+        String title = eventName + ": REMINDER";
+        return addNotification(eventId, title, message);
     }
 }
